@@ -6,9 +6,6 @@ const Campground = require('./models/campgroundModel')
 const { dbURI } = require('./config/environment')
 const defaultAvatarArray = ['https://i.ibb.co/DfJ5PWc/avatar-1.png', 'https://i.ibb.co/HTq3qfD/avatar-2.png', 'https://i.ibb.co/x38pzNJ/avatar-3.png', 'https://i.ibb.co/Y8nck2y/avatar-4.png', 'https://i.ibb.co/WF9Mxwb/avatar-5.png', 'https://i.ibb.co/17LGhrB/avatar-6.png']
 
-const { dbURI } = require('./config/environment')
-
-
 Array.prototype.randomElement = function () {
   return this[Math.floor(Math.random() * this.length)]
 }
@@ -22,7 +19,7 @@ mongoose.connect(dbURI, {
   console.log('Mongoose connected!')
   db.dropDatabase()
     .then(() => {
-      const facilitiesData = fs.readFileSync('./data/finalFacilities.json')
+      const facilitiesData = fs.readFileSync('./server/data/finalFacilities.json')
       const facilitiesContent = JSON.parse(facilitiesData)
       return Campground.create(facilitiesContent.map(facility => {
         return {
@@ -47,7 +44,7 @@ mongoose.connect(dbURI, {
     })
     .then(returnedCampgrounds => {
       console.log(`${returnedCampgrounds.length} campgrounds created. Happy camping!`)
-      const recAreaData = fs.readFileSync('./data/finalRecAreaData.json')
+      const recAreaData = fs.readFileSync('./server/data/finalRecAreaData.json')
       const recAreaContent = JSON.parse(recAreaData)
       return RecArea.create(recAreaContent.map(recArea => ({
         ridbRecAreaId: recArea.RecAreaID,
